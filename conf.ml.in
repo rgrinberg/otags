@@ -1,0 +1,35 @@
+
+(* 
+ * The following variables are normally set by the configure script. 
+ * If this fails for some reason you can copy this file to conf.ml 
+ * and set the value manually.
+ *)
+
+
+(* Path to the camlp4 executable at *compile-time*. 
+ *
+ * otags is linked to a specific camlp4 version at compile-time. At runtime
+ * otags can read abstract syntax trees from external camlp4 commands. If
+ * they are from a different ocaml version, strange things will happen.
+ *)
+let camlp4_exec_path = "@CAMLP4PATH@"
+
+(** Path to the camlp4 dump ast extension. Needed for external
+    parsing.
+*)
+let camlp4_mod_path = "@LIBDIR@"
+
+let ocaml_version = "@REQUIRED_OCAML_VERSION@"
+
+let otags_version = ocaml_version ^ "." ^ "@OTAGS_VERSION@"
+
+let otags_camlp4_ast_impl_magic = 
+  "Otags camlp4 struct ast with line directive info. Version " ^ 
+    otags_version ^ " / " ^ 
+    Camlp4_config.camlp4_ast_impl_magic_number
+
+let otags_camlp4_ast_intf_magic = 
+  "Otags camlp4 sig ast with line directive info. Version " ^ 
+    otags_version ^ " / " ^ 
+    Camlp4_config.camlp4_ast_intf_magic_number
+

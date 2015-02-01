@@ -1,0 +1,132 @@
+.\" groff -man -Tascii foo.1
+.\"
+.TH UPDATE-OTAGS 8 "January 2012" "OTAGS" "System administration commands"
+.SH NAME
+update-otags \- update system-wide tags tables
+.SH SYNOPSIS
+.B update-otags
+.SH DESCRIPTION
+.\" ============= paragraph general purpose ===================================
+.B update-otags
+runs
+.B otags
+on the system-wide installed 
+.B OCaml
+files (in ocamlc \-where). This makes it possible to use the
+tag-features of 
+.B vi\fR/\fBvim
+and 
+.B Emacs
+to jump to the declarations of library functions in the
+system-wide installed 
+.I .mli
+files to read the documentation that is hopefully embedded in
+those files.
+.\" ============= load for emacs =============================================
+.P
+To use the system-wide tags table in 
+.B Emacs\fR,
+use 
+.I M-x visit-tags-table <RET> /var/lib/otags/TAGS\fR.
+To load it by default, customize
+.I tags-table-list
+to contain
+.I /var/lib/otags
+(by using
+.I M-x customize-variable\fR,
+for instance).
+.\" ============= load for vi ================================================
+.P
+For
+.B vim
+use 
+.I :set tags=/var/lib/otags/tags
+or add
+.I set tags=/var/lib/otags/tags
+to your
+.I .vimrc\fR.
+.\" ============= cron job ===================================================
+.P
+One would typically update the system-wide tags tables with a
+cron-job once per week or day.
+.\"
+.\" ==========================================================================
+.\" ================ Files ===================================================
+.\" ==========================================================================
+.\"
+.SH FILES
+.IP "/var/lib/otags/{TAGS,tags}"
+System-wide tags table for
+.B Emacs
+and 
+.B vi\fR/\fBvim\fR.
+.IP "/usr/share/otags/hints"
+Directory for parsing hints. Packages that install files in
+non-standard syntax can install a parser hints file for 
+.B otags
+in this directory, see option
+.B -parser-hints
+in the
+.B otags\fR(1)
+manual.
+.\"
+.\" ==========================================================================
+.\" ================ Bugs ====================================================
+.\" ==========================================================================
+.\"
+.SH BUGS
+.\" ============= pervasives =================================================
+.B Camlp4
+(and therefore 
+.B otags
+too)
+cannot parse all legal 
+.B OCaml
+sources. Most notably,
+.B camlp4
+dies on 
+.I pervasives.mli
+(see bug #5495).
+Therefore, none of the core library functions are tagged.
+.\" ============= other syntax ===============================================
+.P
+Various files in the system-wide 
+.B OCaml
+directory are written in the revised syntax or require other
+syntax extensions. In principle these files can all be properly
+tagged, but the dumb 
+.B update-otags
+script tries to parse all files with the original syntax.
+.\"
+.\" ==========================================================================
+.\" ================ Credits =================================================
+.\" ==========================================================================
+.\"
+.SH CREDITS
+.B update-otags
+appeared first in Debian Etch (see Debian bug #341939). It has
+been added to the contrib directory with an improved man page in 
+.B otags
+3.12.2.
+.\"
+.\" ==========================================================================
+.\" ================ Author ==================================================
+.\" ==========================================================================
+.\"
+.SH AUTHOR
+Hendrik Tews <otags at askra.de>
+.\"
+.\" ==========================================================================
+.\" ================ See also ================================================
+.\" ==========================================================================
+.\"
+.SH "SEE ALSO"
+.BR otags (1)
+.\"
+.\"
+.\" Local Variables:
+.\" ispell-local-dictionary:"american"
+.\" mode:flyspell
+.\" End:
+.\" 
+.\" LocalWords: 

@@ -1,0 +1,64 @@
+r:
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/plexer.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/diff.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/fstream.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/stdpp.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/pretty.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/extfold.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/token.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/ploc.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/grammar.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/extfun.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/prtools.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/pprintf.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/eprinter.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/gramext.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/reloc.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/quotation.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp5/plexing.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/ledit/cursor.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/ledit/ledit.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/ocsigen/simplexmlparser.mli
+
+o m:
+	/tmp/tews/otags-test/root/usr/lib/ocaml/dose3/input.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/mlpost/mlpost.mli
+
+o rq:
+	/tmp/tews/otags-test/root/usr/lib/ocaml/odn/pa_noodn.ml
+	/tmp/tews/otags-test/root/usr/lib/ocaml/sqlexpr/pa_sql.ml
+
+o q:
+	/tmp/tews/otags-test/root/usr/lib/ocaml/odn/pa_odn.ml
+
+o q g:
+	/tmp/tews/otags-test/root/usr/lib/ocaml/ocamlviz/camlp4/pa_ocamlviz.ml
+
+rf debug:
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/camlp4prof.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/unmaintained/etc/parserify.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/unmaintained/lib/fstream.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/unmaintained/lib/extfun.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/unmaintained/odyl/odyl_main.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/test/fixtures/macrotest.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Options.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Register.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/ErrorHandler.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/PreCast.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Debug.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/Camlp4Ast2OCamlAst.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/Token.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/CommentFilter.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/EmptyPrinter.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/Loc.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/FreeVars.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/DynLoader.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/EmptyError.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/Grammar/Fold.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/Grammar/Print.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Struct/Grammar/Parser.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Printers/Null.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Printers/OCamlr.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Printers/OCaml.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Printers/DumpOCamlAst.mli
+	/tmp/tews/otags-test/root/usr/lib/ocaml/camlp4/Camlp4/Printers/DumpCamlp4Ast.mli

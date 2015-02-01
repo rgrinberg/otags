@@ -1,0 +1,624 @@
+2013-09-25  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+
+2013-09-25  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix version number
+	* update man page, changes.html
+
+2013-09-25  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* OCaml 4.01: no changes required, but open! is not
+	  supported because of #6175
+
+2013-08-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix changes.html
+
+2013-08-22  Hendrik Tews <otags@askra.de>
+
+	* release version 4.00.2 on 2013-08-22 11:44:48 UTC
+
+2013-08-22  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+
+2013-08-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* update test data for sexplib changes
+
+2012-12-05  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix exist status in man page
+
+2012-12-05  Hendrik Tews <otags@askra.de>
+
+	* release version 4.00.1 on 2012-12-05 12:25:26 UTC
+
+2012-12-05  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* commit test data
+
+2012-12-05  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+
+2012-12-05  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* treat camlp4 ast magic number mismatch
+	* update man page, changes.html
+
+2012-12-05  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* OCaml 4.00
+
+2012-09-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* try OCaml 4.00 migration, but sexplib is not yet
+	available, 4.00 specific code is in comments
+
+2012-09-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* complete pattern match for let patterns
+
+2012-05-23  Hendrik Tews <otags@askra.de>
+
+	* release version 3.12.5 on 2012-05-23 20:19:32 UTC
+
+2012-05-23  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+
+2012-05-23  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* exit 0 for update-otags for parsing errors
+
+2012-05-22  Hendrik Tews <otags@askra.de>
+
+	* release version 3.12.4 on 2012-05-22 19:27:47 UTC
+
+2012-05-22  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+
+2012-05-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* parser hints dir for update-otags
+
+2012-05-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* parser hints files docs
+
+2012-05-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* tagging /usr/lib/ocaml with hints
+
+2012-05-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* tagging OCaml 3.12.1 sources
+
+2012-05-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* default parser list without parsers
+
+2012-05-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* print short parser list for verbose
+
+2012-05-22  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* ocamldoc makefile rules
+	* skip files with toplevel directives
+
+2012-05-21  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* commit test case
+
+2012-05-21  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix module expression bug
+
+2012-05-21  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* parser hints functionality (option -parser-hints)
+
+2012-05-20  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* report error on empty parser list
+	* consolidate and document exist status
+
+2012-05-18  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* handle inaccessible files gracefully
+	* some cleanup, change order inside TAGS
+
+2012-05-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* make clean fixes
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix download link magic
+
+2012-05-16  Hendrik Tews <otags@askra.de>
+
+	* release version 3.12.3 on 2012-05-16 20:30:50 UTC
+
+2012-05-16  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* remove debian packaging stuff
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* minor changes change
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* complete pattern match for module types
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* complete pattern match for sig items
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* complete pattern match for types
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* adjust changes.html
+	* fix line directive problem in man page
+
+2012-05-16  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* tag recursive modules in signatures and structures
+
+2012-03-28  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* improve configure and make install (sexplib, libdir)
+	* use configured byte compiler for (test-)compiling regression tests
+	* regression test for line directives with external parsing
+	* this fixes the line directive problem also for external
+	  parsing
+
+2012-03-12  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* use otags_dump_ast in external camlp4
+
+2012-03-12  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* makefile fix
+
+2012-03-12  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* configure byte compiler
+	* otags_dump_ast camlp4 extension
+
+2012-02-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix error with infix externals
+
+2012-02-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* use a token filter for recording line directives
+
+2012-02-06  Hendrik Tews <otags@askra.de>
+
+	* release version 3.12.2 on 2012-02-06 13:07:32 UTC
+
+2012-02-06  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix test distribution
+
+2012-02-06  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html again, because of distribution
+	  script error
+
+2012-02-06  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+	* set version to 3.12.2 again
+
+2012-01-31  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* set version to 3.12.1.99 for debian git importing
+
+2012-01-31  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* protect configure against Debian armel which has
+	  ocamlopt.opt but no dynlink.cmxa
+
+2012-01-29  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* don't tag manifest type abbreviation
+
+2012-01-27  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* exclude debian subdir from orig tar
+
+2012-01-27  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* add bug number for pervasives parse error
+
+2012-01-27  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* 2 lintians
+
+2012-01-27  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* add update-otags man page to package
+
+2012-01-27  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* update-otags with man page
+	* cron, postinst, prerm scripts
+	* debian README
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* separate INSTALL
+	* improve README, INSTALL
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* improve vi hint in manpage
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* add cpp line directive test
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* make -q more silent
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* the last man hyphen?
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* more man hyphens
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* another man hyphen
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* lintian man hyphen
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* change packaging info to fix the "hostile takeover"
+
+2012-01-26  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* new option -add-path
+	* remove useless "./" from filenames in tags files
+
+2012-01-25  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix line directive problem (workaround #5159)
+
+2012-01-25  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* modify ccsl test
+
+2012-01-23  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* refactor access to in_channel for the source file
+	* new module source_channel
+
+2012-01-23  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* infrastructure for monitoring line directives (but
+	  don't use it yet)
+	* fix possible problem in reparser state
+
+2012-01-23  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* print error and continue when encountering a wrong
+	  location after a line directive
+
+2012-01-20  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* back to best-compilers
+
+2012-01-20  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* next try
+
+2012-01-20  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix configure for bytecode-only architectures
+
+2012-01-20  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* leave the precise dependency on the camlp4-extra
+	version open
+
+2012-01-19  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* last lintian, hopefully
+
+2012-01-19  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* more lintian fixes
+
+2012-01-19  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix doc-base name
+
+2012-01-19  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* append debian changelog
+	* fix some lintians
+
+2012-01-19  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* more fixes for dh_ocaml
+
+2012-01-18  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* try --with ocaml
+
+2012-01-18  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* disable dh_auto_test
+
+2012-01-18  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* DESTDIR
+	* fix package building and dependencies
+
+2012-01-18  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* start work on debian package
+
+2012-01-18  Hendrik Tews <otags@askra.de>
+
+	* release version 3.12.1 on 2012-01-18 08:48:20 UTC
+
+2012-01-18  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix makefile for bytecode test
+
+2012-01-18  Hendrik Tews <otags@askra.de>
+
+	* prepare doc/changes.html for release
+
+2012-01-18  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* prepare release
+
+2012-01-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* treat -o -
+	* exclude buggy 3.12.0
+	* fix Makefile
+
+2012-01-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* updated parser dependencies to 3.12
+
+2012-01-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix Makefile for test
+
+2012-01-17  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* compiles with 3.12
+
+2012-01-15  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* change to ocaml 3.12
+	* abandon ocamlbuild, use simple Makefile instead
+	* adapt configure
+
+2012-01-14  Hendrik Tews <otags@askra.de>
+
+	* release version 3.11.3 on 2012-01-14 21:48:48 UTC
+
+2012-01-14  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix make-distribution
+
+2012-01-14  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* towards release
+
+2012-01-14  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* change copyright
+
+2012-01-14  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* prepare release
+
+2012-01-12  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* fix sexplib example in man page
+
+2012-01-12  Hendrik Tews  <tews@os.inf.tu-dresden.de>
+
+	* remove -dir-local from man page
+
+2010-11-11  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* Undo -dir-local changes from 29.09.
+	  was completely broken with relative path', eg otags -r .
+
+2010-11-11  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* fix automatic links in html man page
+
+2010-09-29  Hendrik Tews  <tews@gromit.tews.net>
+
+	* test changes to reflect the 3rd commit of 2010-08-24
+	  (vi-multi-set bug)
+
+2010-09-29  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* option -dir-local
+	* error message if files of line directives cannot be found
+
+2010-09-24  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* some more complete pattern matches
+
+2010-09-21  Hendrik Tews  <tews@gromit.tews.net>
+
+	* some bug/feature wish numbers
+	* little progress on complete pattern matching
+
+2010-09-07  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* name-all-modules-fix
+
+2010-09-06  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* change man page
+
+2010-09-06  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* intern support for Camlp4DebugParser
+
+2010-09-06  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* some more test programms
+
+2010-09-01  Hendrik Tews  <tews@gromit.tews.net>
+
+	* fix old/wrong keyword filter after -pc
+
+2010-09-01  Hendrik Tews  <tews@gromit.tews.net>
+
+	* multiple input files for INCLUDE and line directives
+
+2010-08-31  Hendrik Tews  <tews@gromit.tews.net>
+
+	* fix "rp" parser
+	* enable antiquotations for grammar parser
+	* catch/report I/O errors on INCLUDE
+
+2010-08-31  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* enable quotation parsing/lexing depending on the
+	  parsing extensions
+
+2010-08-30  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* fix bug on type _x = int
+
+2010-08-27  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* changes ssi
+
+2010-08-27  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* improve make-distribution
+
+2010-08-27  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* release version 3.11.2
+
+2010-08-27  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* update make-distribution
+
+2010-08-27  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* CHANGES
+
+2010-08-27  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* options -impl, -intf
+
+2010-08-25  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* catch/report some more parsing errors
+
+2010-08-25  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* first release version 3.11.1
+
+2010-08-25  Hendrik Tews  <tews@gromit.tews.net>
+
+	* finalize distribution scripts
+
+2010-08-25  Hendrik Tews  <tews@gromit.tews.net>
+
+	* next part
+
+2010-08-24  Hendrik Tews  <tews@gromit.tews.net>
+
+	* part of make-distribution
+
+2010-08-24  Hendrik Tews  <tews@gromit.tews.net>
+
+	* README with installation notes
+
+2010-08-24  Hendrik Tews  <tews@gromit.tews.net>
+
+	* some XXX'es and the vi-multi-set bug
+
+2010-08-24  Hendrik Tews  <tews@gromit.tews.net>
+
+	* tests
+
+2010-08-24  Hendrik Tews  <tews@gromit.tews.net>
+
+	* configure, make [un]install
+
+2010-08-23  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* add bug number to man page
+
+2010-08-23  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* man page, option -a, default tags file for vi
+
+2010-08-22  Hendrik Tews  <tews@gromit.tews.net>
+
+	* License
+
+2010-08-22  Hendrik Tews  <tews@gromit.tews.net>
+
+	* added vi tags files
+
+2010-08-20  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* fixed tags for generated identifiers (eg. sexp lib)
+
+2010-08-19  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* external parsing
+
+2010-08-16  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* defuctorize tags.ml
+
+2010-08-16  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* recursive directories
+	* better error messages
+	* improved verbose (-v)
+	* exception backtrace on -v
+	* keep directives in the ast
+	* support for standard quotations
+	* fixed infix ops in interfaces
+
+2010-08-06  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* added support for mli-files and sources with quotations
+
+2010-08-05  Hendrik Tews  <tews@blau.inf.tu-dresden.de>
+
+	* initial cvs version: produces already sensible emacs
+	  TAGS files

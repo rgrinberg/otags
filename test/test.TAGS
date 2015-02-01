@@ -1,0 +1,219 @@
+
+test/f.ml,149
+F1,0
+type tt1,0
+type t = AA1,0
+type t = A | BB1,0
+type t = A | B__t_of_sexp__1,0
+type t = A | Bt_of_sexp1,0
+type t = A | Bsexp_of_t1,0
+
+test/a.ml,2559
+A1,0
+let a0a02,1
+let f0f04,13
+let (a1a16,31
+let (a1, a2a26,31
+let (a1, a2, a3a36,31
+let (a7a716,131
+exception A8A818,151
+exception A9A920,165
+exception A10A1022,184
+external a11a1124,215
+module A12A1226,250
+module A13A1328,270
+module A14A1430,313
+  let a15a1531,333
+module A16A1634,359
+    let a16a1636,403
+module A17A1739,427
+  let a18a1840,458
+module type A18AA18A43,478
+  type txtx44,501
+  val comparecompare45,511
+module A19A1948,548
+    type txtx50,571
+    let comparecompare51,589
+module A20A2055,634
+  type txtx56,661
+  let comparecompare57,677
+module type A21A2160,708
+module type A22A2262,733
+  exception A22aA22a63,755
+module type A23A2366,790
+  functor ( X : sig exception A24A2467,809
+  exception A25A2569,863
+module type A26A2672,897
+  type txtx74,920
+  exception A22aA22a75,930
+type a27a2779,990
+type 'a a28a2881,1006
+type ('a, 'b, 'c) a29a2983,1025
+type + ' abc a30a3085,1054
+type - ' abc a31a3187,1078
+type a32a3289,1102
+  | A33A3390,1114
+  | A34A3491,1122
+  | A35A3592,1137
+type a36a3694,1161
+  a37a3795,1174
+  mutable a38a3896,1187
+module type A39A3999,1216
+  class type a40a40100,1238
+  class ['a, 'b ] a41a41101,1268
+  class a42a42102,1303
+    method a43a43103,1324
+class type virtual ['a, 'b] a44a44107,1356
+  method a45a45109,1406
+  method private a46a46110,1426
+  method private virtual a47a47111,1454
+  method virtual a48a48112,1490
+  val a49a49113,1518
+  val mutable a50a50114,1534
+class type a53a53121,1637
+class virtual ['a, 'b] a54a54123,1666
+  inherit object method a55a55127,1727
+val a56a56128,1771
+val mutable a57a57129,1789
+method virtual a60a60134,1875
+method virtual private a61a61135,1900
+method a62a62136,1933
+method private a63a63137,1955
+let ( <:><:>142,2033
+let a64a64144,2060
+let a65a65146,2085
+class type a66a66148,2112
+  inherit object method a67a67149,2136
+class a67a67152,2179
+    method a68a68154,2202
+    method a68a68157,2240
+let _a69_a69160,2269
+type _a70_a70162,2283
+type a80a80164,2300
+type a80 = A81A81164,2300
+type a82a82166,2316
+type a82 = a80 = A81A81166,2316
+let ( !!168,2338
+external ( !!170,2361
+module rec A82A82172,2404
+  type txtx173,2435
+  let comparecompare174,2451
+and A83A83176,2479
+  val a84a84177,2494
+  let a84a84179,2524
+module type A85A85182,2543
+module A86A86184,2570
+type 'a a87_terma87_term187,2623
+  | IntInt188,2642
+  | AddAdd189,2672
+  | AppApp190,2711
+let rec a88_evala88_eval192,2771
+
+test/b.ml,67
+B1,0
+let (b1b12,1
+let (b1, b2b22,1
+let (b1, b2) as b3b32,1
+
+test/d.ml,1012
+D1,0
+let f1f14,59
+type aa9,106
+  | AA10,115
+  | BB11,128
+  | B  | CC11,128
+type bb13,140
+type b = {gg13,140
+type b = {g:int;           rrrr13,140
+let f2f215,176
+module type ENDEND23,245
+  type end_tend_t24,268
+  val end_valend_val25,282
+let rec f2f228,309
+let f3f332,357
+let f3, f4f432,357
+let f5f534,376
+let f5 as f6f634,376
+let f7f736,403
+module ModuModu38,437
+  struct let mofmof39,451
+exception No_valueNo_value41,477
+let valuevalue43,497
+class int_valueint_value47,562
+  val mutable rr49,600
+  method getget51,625
+  method setset53,650
+  method addadd55,681
+let f8f861,777
+type a_typea_type66,870
+  | A1A167,885
+  | A2A268,902
+and b_typeb_type70,920
+  | B1B171,934
+  | B2B272,951
+class ['a] cc75,970
+  method bb76,1003
+and ['a] dd79,1024
+  method dmdm80,1055
+class b_classb_class83,1077
+class xx85,1108
+  (fun o ->  object method xx86,1119
+class type x_classx_class88,1160
+  val mutable yy89,1188
+let ( <:><:>93,1218
+
+test/cpp_h.include.ml,57
+let cpp_inc_acpp_inc_a2,1
+let cpp_inc_bcpp_inc_b5,21
+
+test/cpp_h.source.ml,24
+let ccp_h_accp_h_a2,1
+
+test/cpp_h.generated.ml,21
+Cpp_h.generated1,0
+
+test/c.mli,332
+C1,0
+val c0c02,1
+exception C1C14,15
+external c2c26,29
+module C3C38,62
+module type C4C410,81
+  type c5c511,102
+type c6c614,117
+type 'aaaa c7c716,126
+type ('aaaa, 'bbbbbb) c8c818,141
+val (@@@@20,167
+val ( *@@*@@22,194
+module rec C9C924,224
+and C11C1125,243
+  type c12c1226,257
+module type c13c1329,273
+
+test/e.mli,420
+E1,0
+module type ENDEND1,0
+  type end_tend_t2,23
+  val end_valend_val3,37
+class ['a] int_value1int_value16,64
+  val mutable rr7,96
+  method getget8,118
+  method setset9,136
+class type ['a] int_value2int_value212,167
+  val mutable rr13,204
+  method getget14,226
+  method setset15,244
+class ['a] int_value3int_value319,276
+  val mutable rr20,314
+  method getget21,336
+  method setset22,354
+
+test/cpp_i.generated.ml,21
+Cpp_i.generated1,0
+
+test/cpp_i.include.ml,65
+let cpp_i_inc_acpp_i_inc_a2,1
+let cpp_i_inc_bcpp_i_inc_b5,23
+
+test/cpp_i.source.ml,24
+let ccp_i_accp_i_a2,1

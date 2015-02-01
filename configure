@@ -1,0 +1,339 @@
+#!/bin/sh
+
+##############################################################################
+#
+# Configuration script for otags reloaded
+# 
+# Hendrik Tews Copyright (C) 2010 - 2012
+# 
+# This file is part of "Otags reloaded".
+# 
+# "Otags reloaded" is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+# 
+# "Otags reloaded" is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License in file COPYING in this or one of the parent
+# directories for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with "Otags reloaded". If not, see
+# <http://www.gnu.org/licenses/>.
+# 
+# $Id: configure,v 1.26 2013/09/25 08:40:49 tews Exp $
+# 
+##############################################################################
+
+set -e
+
+REQUIRED_OCAML_VERSION=4.01
+OTAGS_VERSION=1
+
+root=/usr/local
+bindir=$root/bin
+libdir=$root/lib/ocaml/otags
+mandir=$root/share/man
+ocaml_lib_dir=
+native=
+native_goals=
+byterequest=0
+versioncheck=1
+ocamlbindir=
+die_on_3_12_0=1
+
+usage (){
+    echo "Usage:"
+    echo "./configure [OPTION]..."
+    echo
+    echo "Recognized options are:"
+    echo "  --prefix <path>	installation prefix [/usr/local]"
+    echo "  --libdir <path>	camlp4 extension [PREFIX/lib/ocaml/otags]"
+    echo "  --bindir <path>	user executables [PREFIX/bin]"
+    echo "  --mandir <path>	man pages [PREFIX/share/man]"
+    echo "  --bytecode 		don't use native compiler (for testing only)"
+    echo "  --ocamllibdir <path>	ocaml library directory (for testing only)" 
+    echo "  --no-version-check 	don't check for correct ocaml version (not recommended)"
+#    echo "  --ocaml <path>	location of ocaml binaries [searched in PATH]"
+}
+
+while : ; do
+  case "$1" in
+    "") break;;
+    -help|--help) usage; exit 2;;
+    -prefix|--prefix) bindir=$2/bin
+	              libdir=$2/lib/ocaml/otags
+                      mandir=$2/share/man
+		      shift;;
+    -bindir|--bindir) bindir=$2
+		      shift;;
+    -libdir|--libdir) libdir=$2
+                      shift;;
+    -mandir|--mandir) mandir=$2
+		      shift;;
+    -ocamllibdir|--ocamllibdir) 
+	              ocaml_lib_dir=$2
+		      shift;;	              
+    -bytecode|--bytecode)  byterequest=1;;
+    -no-version-check|--no-version-check)
+	  versioncheck=0;;
+    -I-want-buggy-3-12-0)
+	  die_on_3_12_0=0;;
+    # -ocaml|--ocaml)   ocamlbindir="$2/";
+    # 	              shift;;
+
+    # The following option is only here for simplifying the 
+    # make-distribution script.
+    -abra-print-version) 
+	  echo $REQUIRED_OCAML_VERSION.$OTAGS_VERSION;
+	  exit 0;;
+     *) echo "Unknown option \"$1\"." 1>&2; usage; exit 2;;
+  esac
+  shift
+done
+
+# disable error checking
+set +e
+
+# check for ocaml 
+ocbv=$(${ocamlbindir}ocamlc -version)
+if [ $? -ne 0 ] ; then
+    set -e
+    echo compiler ${ocamlbindir}ocamlc not found. 
+    echo Please adjust \$PATH or use --ocaml
+    exit 1
+else
+    set -e
+    echo ${ocamlbindir}ocamlc version $ocbv found.
+fi
+
+# check for buggy 3.12.0
+if [ $die_on_3_12_0 = 1 ] ; then
+    if [ $ocbv = "3.12.0" ] ; then
+	echo
+	echo "OCaml 3.12.0 contains a bug that puts ghost locations in the"
+	echo "syntaxtree. Therefore otags compiled with 3.12.0 is of very"
+	echo "limited use. If you nevertheless want to compile otags"
+	echo "with 3.12.0 use option -I-want-buggy-3-12-0."
+	exit 1
+    fi
+fi
+
+# check ocamlc version
+if [ $versioncheck = 1 ] ; then
+    if [ "$ocbv" \< $REQUIRED_OCAML_VERSION -o \
+	 "$ocbv" \> $REQUIRED_OCAML_VERSION".99" ] ; then
+	echo This version of otags needs $REQUIRED_OCAML_VERSION.x.
+	echo Aborting.
+	exit 1
+    fi
+fi
+
+# disable error checking
+set +e
+
+# check for ocamlopt.opt
+ocvo=$(${ocamlbindir}ocamlopt.opt -version)
+if [ $? -eq 0 ] ; then
+    set -e
+    if [ $ocbv != $ocvo ] ; then
+	echo ${ocamlbindir}ocamlc and ${ocamlbindir}ocamlopt.opt have different versions.
+	echo Please check your installation!
+	echo Aborting.
+	exit 1
+    fi
+
+    echo ${ocamlbindir}ocamlopt.opt version $ocvo found. 
+    
+    if ${ocamlbindir}ocamlopt.opt -I +camlp4 -o /dev/null \
+	unix.cmxa dynlink.cmxa camlp4fulllib.cmxa ;
+    then
+	echo Native compilation enabled.
+	native=true
+    else
+	echo ocamlopt.opt -I +camlp4 unix.cmxa dynlink.cmxa camlp4fulllib.cmxa failed.
+	echo Native compilation disabled.
+	native=false
+    fi
+else
+    set -e
+    echo ocamlopt.opt not found. Native compilation disabled.
+    native=false
+fi
+
+if [ $byterequest = 1 ] ; then
+    native=false
+fi
+
+if [ $native = "true" ] ; then
+    ocamldep=${ocamlbindir}ocamldep.opt
+    ocamlc=${ocamlbindir}ocamlc.opt
+    ocamlopt=${ocamlbindir}ocamlopt.opt
+    otags=otags.opt
+else
+    ocamldep=${ocamlbindir}ocamldep
+    ocamlc=${ocamlbindir}ocamlc
+    ocamlopt=false
+    otags=otags.byte
+fi
+
+if [ $native = "true" ] ; then
+    # disable error checking
+    set +e
+
+    # check ocamlc.opt if native detected
+    ocvo=$(${ocamlbindir}${ocamlc} -vnum)
+    if [ $? -ne 0 ] ; then
+	set -e
+	echo $ocamlopt exists but $ocamlc not.
+	echo Please check your ocaml installation!
+	echo Aborting.
+	exit 1
+    elif [ $ocvo != $ocbv ] ; then
+	set -e
+	echo ${ocamlbindir}$ocamlc and ${ocamlbindir}$ocamlopt have different versions!
+	echo Please check your installation!
+	echo Aborting.
+	exit 1
+    else
+	set -e
+	echo ${ocamlbindir}${ocamlc} version $ocvo found.
+    fi
+fi
+
+
+# disable error checking
+set +e
+
+# check ocamldep
+ocdepv=$($ocamldep -vnum)
+if [ $? -ne 0 -o $ocdepv != $ocbv ] ; then
+    set -e
+    echo $ocamlc exists but $ocamldep not. 
+    echo Please check your ocaml installation!
+    echo Aborting.
+    exit 1
+else
+    set -e
+fi
+
+if [ $ocdepv != $ocbv ] ; then
+    echo $ocamlc and $ocamldep have different versions.
+    echo Please check your ocaml installation!
+    echo Aborting.
+    exit 1
+fi
+
+
+# disable error checking
+set +e
+
+# check for camlp4
+ocvo=$(${ocamlbindir}camlp4 -version)
+if [ $? -eq 0 ] ; then
+    set -e
+    echo ${ocamlbindir}camlp4 version $ocvo found.
+
+    if [ "$ocbv" != "$ocvo" ] ; then
+    	echo ${ocamlbindir}ocamlc and ${ocamlbindir}camlp4 have different versions.
+	echo Please check your ocaml installation!
+	echo Aborting.
+    	exit 1
+    fi
+
+    camlp4path=$(dirname $(which ${ocamlbindir}camlp4))
+else
+    set -e
+    echo camlp4 not found.
+    echo Aborting.
+    exit 1
+fi
+
+
+# check the camlp4 variants
+camlp4_variants="camlp4of camlp4oof camlp4orf camlp4rf camlp4rf camlp4o camlp4r"
+for cp4 in $camlp4_variants ; do 
+
+    # disable error checking
+    set +e
+
+    ocvo=$($camlp4path/$cp4 -version)
+    if [ $? -eq 0 ] ; then
+	set -e
+	# echo $cp4 version $ocvo found.
+
+	if [ "$ocbv" != "$ocvo" ] ; then
+    	    echo ${ocamlbindir}ocamlc and $camlp4path/$cp4 have different versions.
+	    echo Please check your ocaml installation!
+	    echo Aborting.
+    	    exit 1
+	fi
+    else
+	set -e
+	echo $cp4 not found.
+	echo Aborting.
+	exit 1
+    fi
+done
+
+
+# try to find the directories for pa_type_conv.cma and pa_sexp_conv.cma
+# these are only needed for testing, no problem if they are not found
+
+if [ $ocaml_lib_dir ] ; then
+    typeconvdir=$ocaml_lib_dir/sexplib
+    sexpdir=$ocaml_lib_dir/type_conv
+else
+    if ocamlfind query type_conv > /dev/null ; then
+	if ocamlfind query sexplib > /dev/null ; then
+	    typeconvdir=$(ocamlfind query type_conv)
+	    sexpdir=$(ocamlfind query sexplib)
+	else
+	    typeconvdir=
+	    sexpdir=
+	fi
+    else
+	typeconvdir=
+	sexpdir=
+    fi
+fi
+
+
+# Summary of the configuration
+echo
+echo "  Configuration summary:"
+echo "    binaries   will be installed in $bindir"
+echo "    camlp4 extensions will be installed in $libdir"
+echo "    man pages  will be installed in $mandir"
+echo "    camlp4path = $camlp4path"
+if [ $native = "true" ] ; then
+    echo "    native-code compilation enabled"
+else
+    echo "    native-code compilation disabled"
+fi
+if [ $typeconvdir ] ; then
+    echo "    testing uses $typeconvdir"
+    echo "             and $sexpdir"
+fi
+
+# Make conf.ml
+sed -e "s|@CAMLP4PATH@|$camlp4path|" \
+    -e "s|@LIBDIR@|$libdir|" \
+    -e "s|@REQUIRED_OCAML_VERSION@|$REQUIRED_OCAML_VERSION|" \
+    -e "s|@OTAGS_VERSION@|$OTAGS_VERSION|" \
+    conf.ml.in > conf.ml
+
+
+# Make the Makefile
+sed -e "s|@BINDIR@|$bindir|" \
+    -e "s|@LIBDIR@|$libdir|" \
+    -e "s|@MANDIR@|$mandir|" \
+    -e "s|@OTAGS@|$otags|" \
+    -e "s|@OCAMLC@|$ocamlc|" \
+    -e "s|@OCAMLOPT@|$ocamlopt|" \
+    -e "s|@OCAMLDEP@|$ocamldep|" \
+    -e "s|@SEXPLIBDIR@|$sexpdir|" \
+    -e "s|@TYPECONVDIR@|$typeconvdir|" \
+    Makefile.in > Makefile

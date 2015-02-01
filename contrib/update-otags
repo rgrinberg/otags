@@ -1,0 +1,30 @@
+#!/bin/sh
+
+TAGSDIR=/var/lib/otags
+#TAGSDIR=/tmp
+test -d "$TAGSDIR" || exit 0
+
+OCAMLC=`which ocamlc`
+test -x "$OCAMLC" || exit 0
+
+OCAMLDIR=`ocamlc -where`
+test -d "$OCAMLDIR" || exit 0
+
+OTAGS=`which otags`
+test -x "$OTAGS" || exit 0
+
+rm -f $TAGSDIR/TAGS $TAGSDIR/tags
+
+$OTAGS -parser-hints /usr/share/otags/hints -q -r     -o $TAGSDIR/TAGS $OCAMLDIR
+status=$?
+if [ $status -gt 1 ] ; then 
+    exit $status
+fi
+
+$OTAGS -parser-hints /usr/share/otags/hints -q -r -vi -o $TAGSDIR/tags $OCAMLDIR
+status=$?
+if [ $status -gt 1 ] ; then 
+    exit $status
+else
+    exit 0
+fi

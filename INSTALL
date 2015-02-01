@@ -1,0 +1,55 @@
+                             INSTALLATION
+===========================================================================
+
+1- optional: If you want to run the regression test after compilation
+   you need sexplib and its dependency type-conv (Debian packages
+   libsexplib-camlp4-dev and libtype-conv-camlp4-dev). If you only
+   want to compile and use otags then don't install those packages.
+
+2- configure with
+
+   ./configure
+
+   Recognized options are:
+     --prefix <path>       installation prefix [/usr/local]
+     --bindir <path>       user executables [PREFIX/bin]
+     --mandir <path>       man pages [PREFIX/share/man]
+     --bytecode            don't use native compiler (for testing only)
+     --ocamllibdir <path>  ocaml library directory (for testing only)
+     --no-version-check    don't check for correct ocaml version 
+                                                       (not recommended)
+
+   The first three options set the installation directories.
+
+   The --no-version-check option disables the ocaml version check. Use 
+   it at your own risk (for instance when your working with the latest 
+   cvs version of ocaml).
+
+   The option --ocamllibdir sets the directory in which
+   type-conf/pa_type_conv.cma and sexplib/pa_sexp_conv.cma can be
+   found if you have them installed and they cannot be found
+   automatically using ocamlfind.
+
+   [If you want to know the details: The configure script checks for
+    ocamlc and ocamlopt.opt. When the latter is found native compilation
+    is used. It further checks wheter all of ocamldep, camlp4, camlp4of,
+    camlp4oof, camlp4orf, camlp4rf, camlp4rf, camlp4o and camlp4r are
+    installed and have the same version as ocamlc and ocamlopt.opt. The
+    location of the camlp4 executables is hardwired in the executable
+    (via conf.ml.in). The script uses "ocamlfind query" to determine the
+    location of sexplib and type_conv. 
+   ]
+
+3- compile with
+
+   make all
+
+4- acquire suitable rights and install
+
+   make install
+
+
+5- optional, if you want update-otags, check the path' in
+   contrib/update-otags and contrib/Makefile and do then
+
+   make -C contrib install

@@ -1,0 +1,362 @@
+# Otags reloaded
+# 
+# Hendrik Tews Copyright (C) 2010 - 2012
+# 
+# This file is part of "Otags reloaded".
+# 
+# "Otags reloaded" is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+# 
+# "Otags reloaded" is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+# General Public License in file COPYING in this or one of the parent
+# directories for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with "Otags reloaded". If not, see
+# <http://www.gnu.org/licenses/>.
+# 
+# $Id: Makefile.in,v 1.30 2012/05/22 13:46:45 tews Exp $
+# 
+
+.PHONY: all
+all: otags_dump_ast.cma otags
+
+#############################################################################
+##
+## CONFIGURATION SECTION
+##
+#############################################################################
+
+# The following variables are normally set by the configure script. 
+# If this fails for some reason you can also rename Makefile.in to Makefile
+# and set these variables manually. You also have to rename config.ml.in 
+# into config.ml and adjust the values there.
+
+# BINDIR: Directory where binaries are to be instelled. 
+BINDIR:=@BINDIR@
+
+# LIBDIR: Directory where the camlp4 extension is to be installed. 
+# The default is PREFIX/lib/ocaml/otags
+LIBDIR=@LIBDIR@
+
+# MANDIR: Directory where the man page is to be installed.
+MANDIR:=@MANDIR@
+
+# Should be ``otags.opt'' if you have ocamlopt.opt available.
+# Should be ``otags.byte'' if you only have ocamlc.
+otags: @OTAGS@
+
+# ocaml byte compiler: should be ``ocamlc.opt'' if available, 
+# ``ocamlc'' otherwise
+OCAMLC:=@OCAMLC@
+
+# native ocaml compiler: 
+# should be ``ocamlopt.opt'' or ``ocamlopt'' if available, empty otherwise
+OCAMLOPT:=@OCAMLOPT@
+
+# ocaml dependency analyzer
+# should be ``ocamldep.opt'' if available, ``ocamldep'' otherwise
+OCAMLDEP:=@OCAMLDEP@
+
+
+# The following two options are only needed for regression testing.
+# Otags can be compiled and used without problems if these options are
+# not set. If you want to run "make test" set them to the location of
+# pa_type_conv.cma and pa_sexp_conv.cma, respectively.
+
+TYPECONVDIR=@TYPECONVDIR@
+SEXPLIBDIR=@SEXPLIBDIR@
+
+#############################################################################
+##
+## END OF CONFIGURATION SECTION
+##
+#############################################################################
+
+OCAMLDOC:=ocamldoc.opt
+
+#############################################################################
+##
+## Compile
+##
+#############################################################################
+
+.PHONY: otags
+
+COMMON_ML_SOURCES:=\
+	monitor_line_directive.ml \
+	conf.ml
+
+MAIN_ML_SOURCES_1:=\
+	global.ml \
+	misc.ml \
+	add_quotation.ml \
+	types.ml \
+	source_channel.ml \
+	translate_location.ml \
+	reparse.ml \
+	camlp4_names.ml \
+	emacs.ml \
+	vi.ml \
+	parser_factory.ml \
+	parser_hints.ml
+
+MAIN_ML_SOURCES_2_RQ:=\
+	tags.ml
+
+MAIN_ML_SOURCES_3:=\
+	otags.ml
+
+MAIN_ML_SOURCES:=$(COMMON_ML_SOURCES) \
+	$(MAIN_ML_SOURCES_1) $(MAIN_ML_SOURCES_2_RQ) $(MAIN_ML_SOURCES_3)
+
+MODULE_ML_SOURCES_1:=\
+	otags_dump_ast.ml
+
+MODULE_ML_SOURCES:=$(COMMON_ML_SOURCES) $(MODULE_ML_SOURCES_1)
+
+MLI_SOURCES:=\
+	conf.mli \
+	global.mli \
+	misc.mli \
+	add_quotation.mli \
+	types.mli \
+	source_channel.mli \
+	translate_location.mli \
+	reparse.mli \
+	camlp4_names.mli \
+	tags.mli \
+	emacs.mli \
+	vi.mli \
+	parser_factory.mli \
+	parser_hints.mli
+
+SOURCES_O:=$(COMMON_ML_SOURCES) $(MAIN_ML_SOURCES_1) \
+	$(MAIN_ML_SOURCES_3) $(MODULE_ML_SOURCES_1) $(MLI_SOURCES)
+SOURCES_RQ:=$(MAIN_ML_SOURCES_2_RQ)
+
+
+MAIN_CMO_OBJECTS:=$(MAIN_ML_SOURCES:.ml=.cmo)
+MAIN_CMX_OBJECTS:=$(MAIN_ML_SOURCES:.ml=.cmx)
+
+MODULE_CMO_OBJECTS:=$(MODULE_ML_SOURCES:.ml=.cmo)
+MODULE_CMX_OBJECTS:=$(MODULE_ML_SOURCES:.ml=.cmx)
+
+TOCLEAN+=Makefile.deps
+Makefile.deps : $(SOURCES_O) $(SOURCES_RQ)
+	$(OCAMLDEP) $(SOURCES_O) > Makefile.deps
+	$(OCAMLDEP) -pp camlp4orf $(SOURCES_RQ) >> Makefile.deps
+
+include Makefile.deps
+
+CAMLP4INCLUDES:=-I +camlp4 -I +camlp4/Camlp4Parsers
+OCAMLFLAGS:=-w Ae $(CAMLP4INCLUDES) -g
+
+%.cmx: %.ml
+	$(OCAMLOPT) -c $(OCAMLFLAGS) $<
+
+%.cmo: %.ml
+	$(OCAMLC) -c $(OCAMLFLAGS) $<
+
+%.cmi: %.mli
+	$(OCAMLC) -c $(OCAMLFLAGS) $<
+
+tags.cmx: tags.ml
+	$(OCAMLOPT) -c -pp camlp4orf $(OCAMLFLAGS) $<
+
+tags.cmo: tags.ml
+	$(OCAMLC) -c -pp camlp4orf $(OCAMLFLAGS) $<
+
+
+TOCLEAN+=otags
+
+.PHONY: otags.opt
+otags.opt: $(MAIN_CMX_OBJECTS)
+	$(OCAMLOPT) $(OCAMLFLAGS) -o otags \
+		unix.cmxa dynlink.cmxa camlp4fulllib.cmxa $^
+
+.PHONY: otags.byte
+otags.byte: $(MAIN_CMO_OBJECTS)
+	$(OCAMLC) $(OCAMLFLAGS) -o otags \
+		unix.cma dynlink.cma camlp4fulllib.cma $^
+
+
+TOCLEAN+=otags_dump_ast.cma
+
+otags_dump_ast.cma: $(MODULE_CMO_OBJECTS)
+	$(OCAMLC) -a -o $@ $^
+
+
+#############################################################################
+##
+## Install / Uninstall
+##
+#############################################################################
+
+.PHONY: install
+install:
+	mkdir -p $(DESTDIR)$(BINDIR)
+	mkdir -p $(DESTDIR)$(MANDIR)/man1
+	mkdir -p $(DESTDIR)$(LIBDIR)
+	install -m 755 otags $(DESTDIR)$(BINDIR)
+	install -m 644 doc/otags.1 $(DESTDIR)$(MANDIR)/man1/otags.1
+	install -m 644 otags_dump_ast.cma $(DESTDIR)$(LIBDIR)
+
+.PHONY: uninstall
+uninstall:
+	rm -f $(DESTDIR)$(BINDIR)/otags
+	rm -f $(DESTDIR)$(MANDIR)/man1/otags.1
+	rm -f $(DESTDIR)$(LIBDIR)/otags_dump_ast.cma
+
+
+#############################################################################
+##
+## Testing
+##
+#############################################################################
+
+TOCLEAN+= test/cpp_*.generated.ml
+TESTSOURCES_ML:= test/a.ml test/b.ml test/d.ml test/cpp_h.generated.ml
+TESTSOURCES_MLI:= test/c.mli test/e.mli
+TESTSOURCES_NORM:= $(TESTSOURCES_ML) $(TESTSOURCES_MLI) 
+TESTSOURCES_EXT:= test/cpp_i.generated.ml
+TESTSOURCES_SEXP:= test/f.ml
+TESTSOURCES:= $(TESTSOURCES_NORM) $(TESTSOURCES_SEXP)
+COMPILEDTESTS:= $(TESTSOURCES_ML:.ml=.cmo) \
+		$(TESTSOURCES_MLI:.mli=.cmi) \
+		$(TESTSOURCES_SEXP:.ml=.cmo) \
+		$(TESTSOURCES_EXT:.ml=.cmo)
+
+
+test/test.NEWTAGS: otags $(TESTSOURCES)
+	$(MAKE) OCAMLFLAGS="-w a" $(COMPILEDTESTS)
+	./otags -I $(TYPECONVDIR) -I $(SEXPLIBDIR) \
+		-pa pa_type_conv.cma -pa pa_sexp_conv.cma $(TESTSOURCES_SEXP) \
+		-pr $(TESTSOURCES_NORM) \
+		-extern $(TESTSOURCES_EXT) \
+		-o test/test.NEWTAGS
+
+test/test.newtags: otags $(TESTSOURCES)
+	$(MAKE) OCAMLFLAGS="-w a" $(COMPILEDTESTS)
+	./otags -vi -I $(TYPECONVDIR) -I $(SEXPLIBDIR) \
+		-pa pa_type_conv.cma -pa pa_sexp_conv.cma $(TESTSOURCES_SEXP) \
+		-pr $(TESTSOURCES_NORM) \
+		-extern $(TESTSOURCES_EXT) \
+		-o test/test.newtags
+
+test: test/test.NEWTAGS test/test.newtags
+	diff -U 0 test/test.TAGS test/test.NEWTAGS
+	diff -U 0 test/test.tags test/test.newtags
+
+testtrue: test/test.NEWTAGS test/test.newtags
+	diff -U 0 test/test.TAGS test/test.NEWTAGS; true
+	diff -U 0 test/test.tags test/test.newtags; true
+
+
+.PRECIOUS: test/%.generated.ml
+test/%.generated.ml: test/%.source.ml test/%.include.ml
+	cpp $< > $@
+
+test/f.cmo: test/f.ml
+	$(OCAMLC) -pp "camlp4o -I $(TYPECONVDIR) -I $(SEXPLIBDIR) pa_type_conv.cma pa_sexp_conv.cma" \
+		-w p -I $(SEXPLIBDIR) -c $<
+
+.PHONY: generation
+generation:
+	cp test/test.NEWTAGS test/test.TAGS 
+	cp test/test.newtags test/test.tags 
+
+
+#############################################################################
+##
+## other tests
+##
+#############################################################################
+
+ccsltest:
+	rm -f test/ccsl.NEWTAGS
+	cwd=$$(pwd); \
+	for d in Ccsl Common Keywords ; do \
+		cd /home/tews/src/ccsl/Ccslc/$$d; \
+		$$cwd/otags -a -r -add-path $$d -o $$cwd/test/ccsl.NEWTAGS . ;\
+	done
+	cwd=$$(pwd); \
+	cd /home/tews/src/ccsl/Ccslc/Ccsl; \
+		$$cwd/otags -vi -r -o $$cwd/test/ccsl.newtags .
+	diff -U 0 test/ccsl.TAGS test/ccsl.NEWTAGS; true
+	diff -U 0 test/ccsl.tags test/ccsl.newtags
+
+ccslgeneration:
+	cp test/ccsl.NEWTAGS test/ccsl.TAGS
+	cp test/ccsl.newtags test/ccsl.tags
+
+
+.PHONY: tag-ocaml-source
+tag-ocaml-source: otags
+	curr=`pwd`; cd /usr/local/src/ocaml-3.12.1; \
+	otags -parser-hints $$curr/test/ocaml-3121-hints -r -v \
+		-o $$curr/test/ocaml-3121.TAGS .
+
+
+.PHONY: tag-lib-ocaml
+tag-lib-ocaml: otags
+	otags -parser-hints test/usr-lib-ocaml-hints -r -v \
+		-o test/usr-lib-ocaml.TAGS \
+		/tmp/tews/otags-test/root/usr/lib/ocaml
+
+
+#############################################################################
+##
+## Internal documentation
+##
+#############################################################################
+
+TOCLEAN+=dump-o.odoc-dump
+dump-o.odoc-dump: $(SOURCES_O)
+	$(OCAMLDOC) $(CAMLP4INCLUDES) -dump $@ $^
+
+TOCLEAN+=dump-rq.odoc-dump
+dump-rq.odoc-dump: $(SOURCES_RQ)
+	$(OCAMLDOC) $(CAMLP4INCLUDES) -pp camlp4orf -dump $@ $^
+
+.PHONY: doc
+doc: dump-o.odoc-dump dump-rq.odoc-dump
+	rm -rf doc/internal
+	mkdir doc/internal
+	$(OCAMLDOC) $(CAMLP4INCLUDES) -d doc/internal -inv-merge-ml-mli -m A \
+		-html -load dump-o.odoc-dump -load dump-rq.odoc-dump
+	$(OCAMLDOC) $(CAMLP4INCLUDES) -dot -dot-reduce \
+		-o doc/internal/dependencies.dot \
+		-load dump-o.odoc-dump -load dump-rq.odoc-dump
+	dot -Tps doc/internal/dependencies.dot > doc/internal/dependencies.ps
+
+.PHONY: check-doc
+check-doc: dump.odoc-dump
+	$(OCAMLDOC) -g $(ODOC_CHECK) -load dump.odoc-dump -check-all fcd
+
+
+#############################################################################
+##
+## Other goals
+##
+#############################################################################
+
+clean:
+	rm -f $(TOCLEAN)
+	rm -f *.cmi *.cmo *.cmx *.o *.cma *.cmxa *.a
+	rm -f test/*.cmi test/*.cmo
+	rm -f test/*NEWTAGS test/*newtags
+	$(MAKE) -C doc clean
+	$(MAKE) -C contrib clean
+
+
+TAGS: $(SOURCES_O) $(SOURCES_RQ) otags.opt
+	./otags -pa rq $(SOURCES_RQ) -pr $(SOURCES_O)
+
+tags: $(SOURCES_O) $(SOURCES_RQ) otags.opt
+	./otags -vi -pa rq $(SOURCES_RQ) -pr $(SOURCES_O)
+

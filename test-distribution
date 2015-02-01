@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# invoke as test-distribution tag config-args
+
+set -e
+
+tag=$1
+shift
+config_args="$*"
+
+echo =====================================================================
+echo ========= TEST $tag $config_args
+echo =====================================================================
+
+
+tmpdir=/tmp/tews
+otags_version=$(./configure -abra-print-version)
+name="otags-$otags_version"
+dir=$tmpdir/test-$name/$tag
+
+rm -rf $dir
+mkdir -p $dir
+
+if [ ! -f $tmpdir/$name.tar.gz ] ; then
+    echo no $tmpdir/$name.tar.gz found!
+    exit 1
+fi
+
+pushd $dir
+tar -xzf $tmpdir/$name.tar.gz
+
+popd
+
+# tocopy="test/lablgtk* test/Ccslc*"
+tocopy=""
+
+for f in $tocopy ; do
+    # echo cp $f $dir/$name/$f
+    cp $f $dir/$name/$f
+done
+
+if [ ! -d $dir/$name ] ; then
+    echo $dir/$name does not exist !!
+    exit 1
+fi
+pushd $dir/$name
+
+set -x
+./configure --prefix $dir/install $config_args 
+set +x
+
+make 
+make test 2>/dev/null
+if [ $? = 0 ] ; then
+    echo =====================================================================
+    echo ========= TEST PASSED $tag $config_args
+    echo =====================================================================
+else
+    echo =====================================================================
+    echo ========= TEST FAILED $tag $config_args
+    echo =====================================================================
+    exit 1
+fi

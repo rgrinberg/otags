@@ -1,0 +1,247 @@
+#!/bin/bash
+
+fast=0
+
+commit_changes="yes"
+
+webdir=/home/tews/www/alfa-www/askra-root/software/otags
+#webdir=/tmp/tews/otags-www
+
+function usage(){
+    echo "usage: make-distribution [-fast] [-nochanges]"
+    exit 1
+}
+
+
+while [ $# \!= 0 ]; do
+    case $1 in
+	-nochanges) 	commit_changes="no";
+	    		shift;;
+	-fast)		fast=1;
+	    		shift;;
+	*)		echo `basename $0` : unknown option $1;
+		        usage;
+			shift;;
+    esac;
+done
+
+timestamp=$(date '+%Y-%m-%d')
+
+otags_version=$(./configure -abra-print-version)
+
+
+if [ $commit_changes = "yes" ] ; then
+    echo
+    echo Prepare changes.html for commit?
+    echo -n [Y/n]?
+    read answer
+    if [  ${answer:=y} = n -o $answer = N ] ; then
+	commit_changes="no"
+    fi
+fi
+
+
+if [ $commit_changes = "yes" ] ; then
+
+    sed -i.$(date +%s)~ \
+	-e "s/^<DT>XXXX-XX-XX/<DT>$timestamp: otags $otags_version released/" \
+	doc/changes.html
+
+    cvsmessage="* prepare doc/changes.html for release"
+
+    cat - ChangeLog > newchangelog <<EOF
+$(date +%Y-%m-%d)  Hendrik Tews <otags@askra.de>
+
+	$cvsmessage
+
+EOF
+
+    mv newchangelog ChangeLog
+
+    cvs update | grep -v '^?' | grep -v '^cvs update: Updating'
+
+    echo
+    echo Commit and copy patched [recent-]changes.html : 
+    echo cvs commit -m "$cvsmessage" . ?
+    echo -n [Y/n]?
+    read answer
+
+    if [  ${answer:=y} = n -o $answer = N ] ; then
+	exit 0
+    fi
+
+    cvs commit -m "$cvsmessage" .
+    cp doc/changes.html $webdir
+
+    sed -n -e '/RECENT CHANGES START/,/RECENT CHANGES END/p' \
+	< doc/changes.html > $webdir/recent-changes.html
+fi
+
+rm -r doc/otags.html
+make -C doc otags.html
+
+branch=$(cvs status Makefile.in | awk  '/Sticky Tag/ {print $3;}')
+if [ $branch = '(none)' ] ; then
+    branch=HEAD
+fi
+
+echo using branch $branch
+
+export CVSROOT=$(cat CVS/Root)
+echo using CVSROOT $CVSROOT
+
+
+tmpdir=/tmp/tews
+name="otags-$otags_version"
+
+rm -rf $tmpdir/$name
+
+pushd $tmpdir
+set -x
+cvs export -d $name -r $branch src/otags > /dev/null
+set +x
+
+filestodelete="test/ccsl.* test/otags.* test/loc_t.ml
+               util/test_subst.ml util/test_osubst.ml
+               debian make-deb-package"
+
+for f in $filestodelete ; do
+    rm -rf $name/$f
+done
+
+
+popd
+
+filestocopy="doc/otags.html"
+
+for f in $filestocopy ; do
+    cp $f $tmpdir/$name/$f
+done
+
+pushd $tmpdir
+
+tar -czf $name.tar.gz $name
+
+popd
+
+rm -rf $tmpdir/test-otags*
+
+set -e
+if [ $fast = 0 ] ; then
+    ./test-distribution byte --bytecode
+    ./test-distribution native
+fi
+set +e
+
+
+echo
+echo copy doc/otags.man
+echo     $tmpdir/$name.tar.gz 
+echo to $webdir
+echo -n [Y/n]?
+read answer
+
+if [  ${answer:=y} = n -o $answer = N ] ; then
+    exit 0
+fi
+
+cp doc/otags.html $webdir/otags.man.html
+cp $tmpdir/$name.tar.gz $webdir
+
+
+release_tag=otags-release-$(echo $otags_version | sed -e 's/\./-/g')
+
+echo
+echo Fix download links in website and tag release with $release_tag ?
+echo -n [Y/n]?
+read answer
+
+if [  ${answer:=y} = n -o $answer = N ] ; then
+    exit 0
+fi
+
+oldlink=$(sed -n -e '/LATEST VERSION LINK/ {s/<[^>]*>//
+       	  	   	   	            s/\[otags-//
+				            s/.tar.gz\]//
+                                            s/>\./>,/
+                                            p
+				           }' < $webdir/index.shtml)
+
+
+tgzfile="otags-$otags_version.tar.gz"
+newlink="<!-- LATEST VERSION LINK --><A HREF=\"$tgzfile\">[$tgzfile]<\\/A>."
+
+cp $webdir/index.shtml $webdir/index.shtml.$(date +%s)~
+
+sed -e "/LATEST VERSION LINK/ c$newlink" \
+    -e "/Previous versions:/ {p
+                             c$oldlink
+                            }" \
+    < $webdir/index.shtml > $webdir/indexnew.shtml
+
+mv $webdir/indexnew.shtml $webdir/index.shtml
+
+
+cvs tag $release_tag
+
+echo
+echo Upload website?
+echo -n [Y/n]?
+read answer
+
+if [  ${answer:=y} = n -o $answer = N ] ; then
+    exit 0
+fi
+
+/home/tews/www/update-sys -web
+
+
+echo
+echo bump version number?
+echo -n [Y/n]?
+read answer
+
+if [  ${answer:=y} = n -o $answer = N ] ; then
+    exit 0
+fi
+
+
+otagsversion=$(sed -n -e '/^OTAGS_VERSION/ {s/OTAGS_VERSION=//
+                                               p
+                                              }' < configure)
+otagsversion=$(($otagsversion + 1))
+
+
+cp configure configure.$(date +%s)~
+sed -e "/^OTAGS_VERSION/ cOTAGS_VERSION=$otagsversion" \
+    < configure > newconfigure
+
+mv newconfigure configure
+
+releasetime=$(TZ=UTC date '+%Y-%m-%d %H:%M:%S %Z')
+cvsmessage="* release version $otags_version on $releasetime"
+
+cat - ChangeLog > newchangelog <<EOF
+$(date +%Y-%m-%d)  Hendrik Tews <otags@askra.de>
+
+	$cvsmessage
+
+EOF
+
+mv newchangelog ChangeLog
+
+cvs update | grep -v '^?' | grep -v '^cvs update: Updating'
+
+
+
+echo
+echo cvs commit -m "$cvsmessage" . ??
+echo -n [Y/n]?
+read answer
+
+if [  ${answer:=y} = n -o $answer = N ] ; then
+    exit 0
+fi
+
+cvs commit -m "$cvsmessage" .
+
