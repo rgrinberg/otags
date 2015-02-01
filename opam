@@ -8,7 +8,7 @@ bug-reports: "https://github.com/rgrinberg/otags/issues"
 dev-repo: "https://github.com/rgrinberg/otags.git"
 
 build: [
-  ["./configure"]
+  ["./configure" "--no-version-check"]
   [make]
 ]
 
