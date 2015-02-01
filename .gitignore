@@ -1,0 +1,8 @@
+Makefile
+Makefile.deps
+*.cmx
+*.cmi
+*.o
+*.cmo
+*.cma
+otags
