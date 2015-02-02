@@ -2,6 +2,13 @@
 Otags Reloaded: TAGS generation for emacs and vi from OCaml sources
 ===========================================================================
 
+Installation
+============
+
+```
+$ opam pin add otags https://github.com/rgrinberg/otags
+```
+
 Summary
 =======
 
