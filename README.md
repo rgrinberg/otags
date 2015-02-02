@@ -19,13 +19,15 @@ USAGE
 To build an emacs TAGS table for ocaml.ml in standard syntax and
 for quotation.ml in standard syntax with revised quotations do:
 
-   otags ocaml.ml -pa rq quotation.ml
+```
+$ otags ocaml.ml -pa rq quotation.ml
+```
 
 (Note that otags switches the parsing engine between the two
 files.)
 
-Most important options are -r for recursive directory tagging and
--vi for generating vi/vim tags tables.
+Most important options are `-r` for recursive directory tagging and
+`-vi` for generating vi/vim tags tables.
 
 For more examples and all details visit the man page in the doc
 subdirectory or online at http://askra.de/otags/otags.man.html
