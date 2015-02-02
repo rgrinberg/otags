@@ -1,7 +1,5 @@
 
-     Otags Reloaded: TAGS generation for emacs and vi from OCaml sources
-
-===========================================================================
+Otags Reloaded: TAGS generation for emacs and vi from OCaml sources
 ===========================================================================
 
 Summary
@@ -14,9 +12,6 @@ otags finds references to constructors of sum types, fields of
 records, etc. The downside of the camlp4 approach is that you can only
 tag syntactically correct files and that otags only accepts what
 camlp4 thinks is correct (which is sometimes different from ocamlc).
-
-===========================================================================
-===========================================================================
 
 USAGE
 =====
@@ -35,9 +30,6 @@ Most important options are -r for recursive directory tagging and
 For more examples and all details visit the man page in the doc
 subdirectory or online at http://askra.de/otags/otags.man.html
 
-===========================================================================
-===========================================================================
-
 CREDITS / MISC
 ==============
 
@@ -55,13 +47,8 @@ standard Camlp4 syntax extensions are parsed with full native speed
 without exernal Camlp4 processes.
 
 
-===========================================================================
-===========================================================================
-
 Contact
 =======
 
 Please send bug reports, comments, patches, donations to 
 Hendrik Tews <otags@askra.de>
-
-
